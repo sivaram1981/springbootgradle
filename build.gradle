@@ -1,0 +1,52 @@
+// dependencies for command line
+
+buildscript {
+    ext {
+        springBootVersion = '2.0.0.RELEASE'
+        dependencyManagementVersion = '1.0.4.RELEASE'        
+    }    
+    repositories {
+    jcenter()
+    mavenCentral()        
+    }
+    dependencies {    	
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
+    }
+}
+
+//Plugin
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+
+
+// JDK 8
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+
+repositories {
+    jcenter()   
+    mavenCentral() 
+}
+
+dependencyManagement {
+    imports {        
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+    }
+}
+
+dependencies { 
+    
+compile 'org.springframework.boot:spring-boot-starter-web'
+compile group: 'javax.servlet.jsp.jstl', name: 'jstl', version: '1.2'
+compile group: 'taglibs', name: 'standard', version: '1.1.2'
+	    
+// Embedded Tomcat Server
+providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+}    
+
